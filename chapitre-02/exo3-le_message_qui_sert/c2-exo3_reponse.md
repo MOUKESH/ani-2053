@@ -46,4 +46,7 @@ Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   fichier1.cpp
 
+PS C:\Users\p\Desktop\cars> git commit -m "mise à jour du contenu descriptif du fichier1" 
+[master 36b9049] mise à jour du contenu descriptif du fichier1
+ 1 file changed, 0 insertions(+), 0 deletions(-)
 PS C:\Users\p\Desktop\cars> 
