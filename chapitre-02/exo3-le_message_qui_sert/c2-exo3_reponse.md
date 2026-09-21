@@ -38,7 +38,10 @@ Analyse de trois commits de notre historique :
 ### Réécriture du commit le plus faible :
 - **Ancien message :** `le Fichier est modifié`
 - **Nouveau message proposé :** ` mise à jour du contenu descriptif du fichier1`
-- ** preuve:** PS C:\Users\p\Desktop\cars> echo " mise à jour du contenu descriptif du fichier1" >> fichier1.cpp
+- ** preuve:** 
+
+```bash
+PS C:\Users\p\Desktop\cars> echo " mise à jour du contenu descriptif du fichier1" >> fichier1.cpp
 PS C:\Users\p\Desktop\cars> git add fichier1.cpp                      
 PS C:\Users\p\Desktop\cars> git status                                
 On branch master           
@@ -49,3 +52,5 @@ Changes to be committed:
 PS C:\Users\p\Desktop\cars> git commit -m "mise à jour du contenu descriptif du fichier1" 
 [master 36b9049] mise à jour du contenu descriptif du fichier1
  1 file changed, 0 insertions(+), 0 deletions(-)
+
+```

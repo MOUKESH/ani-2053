@@ -62,7 +62,7 @@ $ git restore fichier1.cpp
 MOUKESH 27@DESKTOP-H5PSQIJ MINGW64 ~/Desktop/cars (twoseven)
 $ 
 
-**cas 3: Un commit de trop**
+**cas 3: Un commit de trop*
 
 MOUKESH 27@DESKTOP-H5PSQIJ MINGW64 ~/Desktop/cars (twoseven)
 $ git add fichier1.cpp
