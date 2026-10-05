@@ -3,12 +3,6 @@
 #include "NKCanvas/App/NkCanvasApp.h"
 
 
-NKENTSEU_DEFINE_APP_DATA(([]() {
-    nkentseu::NkAppData d{};
-    d.appName = "Downce";
-    d.appVersion = "1.0.0";
-    return d;
-})());
  
 using namespace nkentseu::renderer;
 class Downce : public NkCanvasApp{
