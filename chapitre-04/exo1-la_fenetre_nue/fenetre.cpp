@@ -9,14 +9,15 @@ NKENTSEU_DEFINE_APP_DATA(([]() {
     d.appVersion = "1.0.0";
     return d;
 })());
-
-class Downce : public nkentseu::renderer::NkCanvasApp{
+ 
+using namespace nkentseu::renderer;
+class Downce : public NkCanvasApp{
      public :
       Downce(){
         Config().title = "Downce";
         Config().width = 800 ;
         Config().height = 600 ;
-        Config().clearColor = nkentseu::renderer::NkColor2D{18, 156, 189, 255};
+        Config().clearColor = NkColor2D{18, 156, 189, 255};
         //Configuration de la fenetre
         
       } 
@@ -28,5 +29,5 @@ class Downce : public nkentseu::renderer::NkCanvasApp{
 };
 int nkmain(const nkentseu::NkEntryState &state) {
 
-    return nkentseu::renderer::NkCanvasApp::Run<Downce>(state);
+    return NkCanvasApp::Run<Downce>(state);
 }

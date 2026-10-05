@@ -1,7 +1,7 @@
 
-La coquille gère l'affiche de la fenètre, gère le rendu et gère aussi les évènements.
+Ce que la coquille fait a ma place : gèrer l'affiche de la fenètre, le rendu et aussi les évènements.
 
-Lorsque je configure dans OnInit() le code compile normalement et l'exécute en affichant une fenètre avec un fonds bleu.
+Ce qui se passe si je configure dans OnInit : le code compile normalement et l'exécute en affichant une fenètre avec un fonds bleu.
 
-lorsqu'on enlève le NKMain.h il erreur de compilation due à une problème de liens(Car il n'existe pas)  parceque nkentseu obligatoirement la bibliothèque 
+Ce qui se passe sans NKMain.h : il y a une erreur de compilation due à une problème de liens(Car il n'existe pas)  parceque nkentseu obligatoirement la bibliothèque 
 NKMain.h pour une bonne compilation.
