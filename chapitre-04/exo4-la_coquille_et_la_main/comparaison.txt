@@ -1,0 +1,1 @@
+coquille : 51, main : 57, rapport : 111.764

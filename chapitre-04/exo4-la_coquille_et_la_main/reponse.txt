@@ -1,0 +1,9 @@
+Ce que la coquille me donne : moins de code, donc moins d'occasions de se tromper. La création de la fenêtre et du contexte, la boucle et son ordre, le calcul de dt sont écrits une fois pour toutes, et testés.
+
+Ce qu'elle me prend : le contrôle. c'est-a-dire l'ordre des étapes de la boucle (quand OnUpdate et OnRender sont appelés) ;
+le choix du backend graphique (AUTO ou fixé) ;la couleur du Clear et le moment où il est appelé ;
+la gestion des événements (fermeture de la fenêtre, éventuellement redimensionnement) ;
+le calcul de dt (est-il plafonné ? comme le MAX_DELTA_TIME de Mú dans le guide NKWindow).
+Les guides montrent des choses qu'une boucle à la main doit gérer elle-même : le garde-fou de resize (OnResize seulement si la taille change vraiment), la pause sur perte de focus, et la recréation de la surface au retour d'arrière-plan sur Android. Si votre coquille les gère, vous pouvez les citer. Mais ne les affirmez que si vous l'avez vu dans le code.
+
+Quand je choisirais la main : quand on a besoin de maîtriser la boucle. Par exemple, pour plusieurs fenêtres, pour un pas de temps fixe pour la physique, pour insérer une étape entre la mise à jour et le rendu, pour un backend choisi avec repli (CreateWithFallback), ou pour comprendre ce qui se passe. Donnez un cas précis, pas une généralité.
