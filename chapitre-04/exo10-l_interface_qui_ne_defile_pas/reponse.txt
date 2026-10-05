@@ -1,0 +1,5 @@
+Ce que fait la barre sans ResetView : elle défile vers la gauche en même temps que le monde et finit par sortir de la fenêtre.
+
+Pourquoi : la vue n'est pas un objet qu'on dessine, c'est un état du renderer. Après SetView(view), tout ce qui est dessiné ensuite, interface comprise, passe par cette caméra tant qu'on ne la change pas. La barre, dessinée en coordonnées (0, 0), se retrouve donc placée dans le monde et subit le déplacement du centre.
+
+Ou placer l'appel : après avoir dessiné le monde et avant de dessiner l'interface, c'est-à-dire entre les deux, avant la barre et son texte.

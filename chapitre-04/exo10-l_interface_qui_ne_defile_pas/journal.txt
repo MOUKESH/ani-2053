@@ -1,0 +1,13 @@
+Il faut au moins 3 lignes par version, au format exact. barre_x est la position de la barre à l'écran, en pixels. Relève-la par calcul ou en lisant la capture.
+
+Avec l'appel, la barre reste à l'écran en 0 quel que soit le centre :
+
+reset : oui, centre_x : 640, barre_x : 0
+reset : oui, centre_x : 1040, barre_x : 0
+reset : oui, centre_x : 1440, barre_x : 0
+
+Sans l'appel, la barre est dessinée dans le monde à x = 0. Sa position à l'écran vaut 0 - (centre_x - 640), soit :
+
+reset : non, centre_x : 640, barre_x : 0
+reset : non, centre_x : 1040, barre_x : -400
+reset : non, centre_x : 1440, barre_x : -800
