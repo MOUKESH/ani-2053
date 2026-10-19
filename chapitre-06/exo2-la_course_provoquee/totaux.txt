@@ -1,0 +1,24 @@
+Dix totaux :
+1769279
+1273207
+2093306
+1240599
+1406694
+1315802
+1607204
+1360692
+1357465
+1494613
+Total attendu : 8000000
+Un seul fil : 1000000 (total exact, attendu 1000000)
+Release : 1162564, 1395353, 1249172 (attendu 8000000)
+Pourquoi : compteur += 1 n'est pas une seule opération : le processeur lit la valeur en mémoire, 
+ajoute 1 dans un registre, puis réécrit le résultat. Quand deux fils exécutent cette séquence en même temps,
+ils lisent la même ancienne valeur et écrivent la même nouvelle : un incrément est perdu. Le nombre de pertes
+dépend du moment exact où chaque fil s'exécute, donc le total change à chaque lancement : de 1 240 599 à 2 093 306
+sur mes dix essais en Debug, pour 8 000 000 attendus, soit 74 à 85 % d'incréments perdus. Avec un seul fil, 
+personne ne s'interpose et le total est exact (1 000 000). En Release, l'optimiseur suppose qu'aucun autre fil
+ne touche cette variable ordinaire et change le code généré (moins d'instructions entre la lecture et l'écriture, 
+valeur gardée plus longtemps dans un registre), ce qui modifie le nombre de collisions : mes trois totaux 
+(1162564, 1395353, 1249172) sont différents de ceux de Debug, et tout aussi faux. Le bug ne disparaît donc pas : 
+le programme reste incorrect et son résultat imprévisible. Seul un atomic ou un verrou le corrige.
