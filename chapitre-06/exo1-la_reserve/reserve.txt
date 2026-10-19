@@ -1,0 +1,12 @@
+Tâche : additionner mille entiers dans une variable locale, 200 fois (puis 100 000 entiers pour la tâche longue).
+Réserve : 1 1 1
+Fils : 10 10 10
+Ouvriers : 12
+Tâche longue : réserve 4, fils 17
+Pourquoi : Créer un NkThread coûte une pile, un appel système et un démarrage : un coût fixe par fil.
+ Une tâche de 1000 additions dure environ une microseconde, bien moins que cette création. Avec 200 tâches, 
+ 200 fils ont pris 10 ms contre 1 ms pour la réserve, soit un rapport d'environ 10, car la réserve n'a créé que 
+ 12 ouvriers et les a réutilisés : chaque tâche n'est qu'un passage dans une file. Avec la tâche 100 fois plus longue,
+  le calcul domine davantage : la réserve passe à 4 ms et les fils à 17 ms. Le coût de création de fil reste à peu près constant,
+   donc sa part dans le total diminue et le rapport tombe d'environ 10 à environ 4. L'avantage de la réserve reste net, mais il se
+    réduit à mesure que la tâche s'allonge : au-delà d'une certaine durée par tâche, le coût de création devient négligeable devant le calcul.
