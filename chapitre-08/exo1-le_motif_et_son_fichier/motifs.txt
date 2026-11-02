@@ -1,0 +1,52 @@
+Stratégie :
+NKCanvas/Renderer/Core/NkIRenderer2D.h:52
+virtual bool Initialize(NkIGraphicsContext *ctx) = 0;
+Interface unique que tous les dorsaux de dessin implémentent ; l'appelant ne sait pas lequel il a. NkOpenGLRenderer2D (NkOpenGLRenderer2D.h:13) hérite de NkBatchRenderer2D, pas directement de NkIRenderer2D.
+
+Fabrique :
+NKCanvas/Renderer/Core/NkRenderer2DFactory.h:36
+static NkIRenderer2D *Create(NkIGraphicsContext *ctx);
+Rend l'interface sans nommer de dorsal : aucun nom de dorsal concret n'apparaît dans cet en-tête. L'implémentation est dans NkRenderer2DFactory.cpp, absent du kit (des en-têtes seulement).
+
+Façade :
+NKCanvas/Renderer/Core/NkRenderer2D.h:58
+class NkRenderer2D {
+Le commentaire de l'en-tête (lignes 3 et 8) la déclare façade publique et concrète au-dessus de NkIRenderer2D.
+
+Patron de méthode :
+NKCanvas/App/NkCanvasApp.h:259
+virtual void OnUpdate(float32 deltaTime) {
+Crochet virtuel appelé par la boucle de NkCanvasApp, dont le code est dans une bibliothèque compilée : l'ordre est imposé par la classe de base.
+
+Observateur :
+NKEvent/NkEventSystem.h:315
+void AddEventCallback(Callback &&callback, NkWindowId windowId = NK_INVALID_WINDOW_ID) {
+On s'abonne avec une fonction (rappel) et on est appelé quand l'événement survient (push). Le routeur NkEventDispatcher::Dispatch, NKEvent/NkEventDispatcher.h:131, marque l'événement consommé quand le gestionnaire rend true.
+
+Singleton :
+NKEvent/NkEventDispatcher.h:417
+inline NkInputQuery NkInput;
+Instance globale unique, sans état propre d'après le commentaire de la ligne 233 (instance globale stateless).
+
+Adaptateur :
+NKCanvas/UI/NkGuiCanvasBackend.h:38
+bool Init(nkentseu::renderer::NkIRenderer2D *renderer) {
+Reçoit un NkIRenderer2D et traduit les listes de dessin de NKGui en appels NKCanvas (classe déclarée à la ligne 26).
+
+Composite :
+NKCanvas/Renderer/Core/NkDrawable.h:51
+virtual void Draw(NkRenderTarget &target, const NkRenderStates &states) const = 0;
+Chaque objet dessinable reçoit l'état du parent (NkRenderStates.h:40, NkTransform transform;). La composition parent-enfant n'est décrite qu'en commentaire dans NkRenderStates.h:8-9 ; la multiplication elle-même est dans un .cpp absent du kit.
+
+Commande :
+Absente du kit.
+Recherche : Get-ChildItem -Recurse include -File | Select-String -Pattern "undo|redo|ICommand|Execute\("
+Les seuls résultats pertinents (hors mots comme « redondant ») sont des exemples en commentaire : NKContainers/Adapters/NkStack.h:538, NKThreading/NkFuture.h:892 et NKPlatform/NkCGXDetect.h:1159. Chacun est à l'intérieur d'un bloc de commentaire /* ... */ (exemple de documentation), pas du code.
+Elle manquerait dans NKEvent et NKGui : aucune action n'y est un objet qu'on garde, rejoue ou défait.
+Le plus proche :
+NKGui/Core/NkGuiDrawList.h:49
+struct NkGuiDrawCmd {
+Un ordre de dessin gardé comme donnée dans la liste cmds (ligne 67) puis rejoué par NkGuiCanvasBackend. Il lui manque une méthode pour s'exécuter lui-même et un moyen de défaire : c'est une donnée, pas une action.
+Autre voisin : NKEvent/NkEventDispatcher.h:766
+struct NkAxisCommand {
+Appelé « commande » dans son commentaire, mais c'est un lien nom logique vers code d'entrée, sans action à exécuter.
