@@ -1,0 +1,19 @@
+Recherche :
+Commande : Get-ChildItem -Recurse include -File | Select-String -Pattern "NkOpenGLRenderer2D" | Select-Object Path, LineNumber, Line
+Résultat : 5 fichiers au total, 13 lignes. 1 fichier est dans le dossier du dorsal OpenGL (NKCanvas/Backend/OpenGL/NkOpenGLRenderer2D.h, 4 lignes : 3, 13, 15 et 17) et 4 fichiers sont hors de ce dossier (9 lignes).
+
+Hors de son dossier :
+NKGui/Core/NkGuiDrawListRaster.h:35 : //      OpenGL (`NkOpenGLRenderer2D::SetBlendMode`) : Screen ONE / : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Core/NkIRenderer2D.h:15 : //   Backends/OpenGL/NkOpenGLRenderer2D : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Core/NkRenderer2D.h:19 : //   NkSoftwareRenderer2D / NkOpenGLRenderer2D / NkVulkanRenderer2D / NkDX11Renderer2D / NkDX12Renderer2D : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Resources/NkTextureBackend.h:22 : // EXEMPLE D'ENREGISTREMENT (OpenGL, en fin de NkOpenGLRenderer2D::Initialize) : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Resources/NkTextureBackend.h:24 : //       &NkOpenGLRenderer2D::CreateGLTexture, : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Resources/NkTextureBackend.h:25 : //       &NkOpenGLRenderer2D::UpdateGLTexture, : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Resources/NkTextureBackend.h:26 : //       &NkOpenGLRenderer2D::DeleteGLTexture, : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Resources/NkTextureBackend.h:27 : //       &NkOpenGLRenderer2D::SetGLTextureFilter, : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Resources/NkTextureBackend.h:28 : //       &NkOpenGLRenderer2D::SetGLTextureWrap, : commentaire (ligne commençant par //)
+NKCanvas/Renderer/Core/NkRenderer2DFactory.h : il ne nomme aucun dorsal. Je l'ai ouvert en entier (51 lignes) et cherché OpenGL, Vulkan, DX11, DX12, Metal et Software : aucune occurrence. Il ne nomme que l'interface NkIRenderer2D (lignes 18, 36, 41, 44), le contexte NkIGraphicsContext et NkGraphicsApi. Son implémentation, NkRenderer2DFactory.cpp, n'est pas dans le kit.
+
+Conclusion :
+Le nom NkOpenGLRenderer2D apparaît dans 4 fichiers hors de son dossier, sur 9 lignes, et les 9 sont des commentaires : aucun #include, aucune déclaration, aucun type, aucun appel. Aucun fichier du code ne nomme cette classe en dehors de son propre en-tête. Le choix du dorsal ne s'est donc pas répandu dans le programme : c'est ce que le cours attend d'une fabrique, qui est le seul endroit à connaître les classes concrètes. L'en-tête de NkRenderer2DFactory ne nomme aucun dorsal, ce qui va dans le même sens : l'appelant reçoit un NkIRenderer2D* et ne sait pas lequel il a. Le choix est donc fait ailleurs, très probablement dans NkRenderer2DFactory.cpp, qui n'est pas dans le kit.
+Réserves : ces commentaires peuvent dater. Par exemple, NkIRenderer2D.h:15 écrit "Backends/OpenGL/NkOpenGLRenderer2D", avec un nom de dossier au pluriel et sans le "NKCanvas/" du chemin actuel ; ce chemin n'est pas un chemin du kit tel quel. Mon verdict porte sur les en-têtes : je ne peux pas affirmer que le .cpp de la fabrique est la seule place du code qui nomme la classe. Les lignes de NkTextureBackend.h:24 à 28 montrent en commentaire que le dorsal OpenGL s'enregistre lui-même (NkOpenGLRenderer2D::CreateGLTexture, etc.) : ce serait un nom qui sert dans le dorsal, pas hors de lui.
